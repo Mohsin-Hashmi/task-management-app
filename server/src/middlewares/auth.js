@@ -8,7 +8,6 @@ const authMiddleware = async (req, res, next) => {
   try {
     const cookies = req.cookies;
     const { token } = cookies;
-    console.log("token is : ",token);
     if (!token) {
       return res.status(401).json({
         success: false,

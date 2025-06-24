@@ -69,12 +69,6 @@ const updateTask = async (req, res) => {
         message: "Task ID is required",
       });
     }
-    if (!title || !description || !priority) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide all the required fields",
-      });
-    }
     const updatedTask = await Task.findByIdAndUpdate(
       _id,
       {
