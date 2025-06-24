@@ -96,16 +96,15 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { _id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
+      
     );
-    res.cookie("token", token);
-    const decoded = jwt.decode(token);
-    console.log(decoded);
+    res.cookie("token", token, {httpOnly: true});
+
     return res.status(200).json({
       success: true,
       message: "User Logged in successfully",
       token: token,
-      decoded: decoded,
       user: user,
     });
   } catch (err) {
@@ -116,7 +115,22 @@ const login = async (req, res) => {
   }
 };
 
+/**Logout API */
+const logout = async (req, res) => {
+  try {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+    });
+    res.json({ message: "User logged out successfully" });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 module.exports = {
   signUp,
   login,
+  logout
 };
