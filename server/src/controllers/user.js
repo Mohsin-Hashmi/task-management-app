@@ -53,6 +53,7 @@ const signUp = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
+      user: user
     });
   } catch (err) {
     return res.status(500).json({
