@@ -50,10 +50,12 @@ const signUp = async (req, res) => {
     });
 
     await user.save();
+    let userObj = user.toObject();
+    delete userObj.password;
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
-      user: user
+      user: userObj
     });
   } catch (err) {
     return res.status(500).json({

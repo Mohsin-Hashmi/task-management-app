@@ -1,30 +1,28 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import register from "../services/register";
+import login from "../services/login";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlics";
-const Register = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  /**API Handler Function */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await register({ name, email, password });
+      const response = await login({ email, password });
+      console.log("response", response);
       dispatch(addUser(response));
-      setName("");
       setEmail("");
       setPassword("");
-      navigate("/login");
+      navigate("/");
     } catch (err) {
-      console.error("Error during registration: ", err);
+      console.error("Error during login: ", err);
     }
   };
   return (
@@ -35,16 +33,9 @@ const Register = () => {
 
       <div className=" w-[500px] m-auto p-6  rounded-2xl bg-[#BDE037] shadow-lg">
         <h2 className="text-center text-2xl pb-6 font-semibold">
-          Create An Account
+          Login to Your Account
         </h2>
         <form action="" onSubmit={handleSubmit}>
-          <input
-            className="w-full p-4 rounded-lg outline-none text-[#232323]"
-            type="text"
-            placeholder="Enter Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
           <input
             className="w-full p-4 rounded-lg outline-none mt-6 text-[#232323]"
             type="email"
@@ -66,15 +57,14 @@ const Register = () => {
           >
             <div className="toggle-knob"></div>
           </div>
-         
           <button
             className="m-auto bg-[#5937E0] block p-3 w-[150px] mt-8 rounded-lg"
             type="submit"
           >
-            Register
+            Login
           </button>
           <div className="flex justify-center gap-x-3 items-center mt-6">
-            <p>Already have an account?</p> <Link to="/login">Login</Link>
+            <p>Don't have an account?</p> <Link to="/register">Register</Link>
           </div>
         </form>
       </div>
@@ -82,4 +72,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

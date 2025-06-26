@@ -16,3 +16,30 @@ body{
   background-color: #5937E0;
   color: #FFFFFF;
 }
+.toggle-switch {
+  width: 50px;
+  height: 24px;
+  border-radius: 20px;
+  background: #5937E0;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: inline-block;
+  vertical-align: middle;
+}
+.toggle-switch.on {
+  background: #232323;
+}
+.toggle-knob {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s;
+}
+.toggle-switch.on .toggle-knob {
+  left: 24px;
+}
