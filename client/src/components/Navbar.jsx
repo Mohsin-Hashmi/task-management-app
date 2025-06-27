@@ -5,6 +5,7 @@ import { removeUser } from "../utils/userSlics";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logout from "../services/logout";
+import logo from "../assets/images/taskUpLogo.png"
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Navbar = () => {
           </Link>
           <span className="flex items-center gap-4">
             <p>Wellcome {store?.name}!</p>
-            <button onClick={handleLogout} className="bg-[#BDE037] p-3 rounded-lg">Logout</button>
+            <button onClick={handleLogout} className="bg-[#BDE037] p-3 rounded-lg text-[#232323] font-normal">Logout</button>
           </span>
         </nav>
       </header>

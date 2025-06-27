@@ -33,27 +33,27 @@ const Register = () => {
         Student Task Manager
       </h1>
 
-      <div className=" w-[500px] m-auto p-6  rounded-2xl bg-[#BDE037] shadow-lg">
-        <h2 className="text-center text-2xl pb-6 font-semibold">
+      <div className=" w-[500px] m-auto p-5  rounded-2xl bg-[#FFF] shadow-lg">
+        <h2 className="text-center text-2xl pb-6 font-semibold text-[#232323]">
           Create An Account
         </h2>
         <form action="" onSubmit={handleSubmit}>
           <input
-            className="w-full p-4 rounded-lg outline-none text-[#232323]"
+            className="w-full p-3 rounded-lg outline-none text-[#232323] border-2 border-[#232323]"
             type="text"
             placeholder="Enter Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
-            className="w-full p-4 rounded-lg outline-none mt-6 text-[#232323]"
+            className="w-full p-3 rounded-lg outline-none mt-6 text-[#232323] border-2 border-[#232323]"
             type="email"
             placeholder="Enter Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            className="w-full p-4 rounded-lg outline-none mt-6 text-[#232323]"
+            className="w-full p-3 rounded-lg outline-none mt-6 text-[#232323] border-2 border-[#232323]"
             type={showPassword ? "text" : "password"}
             placeholder="Enter Your Password"
             value={password}
@@ -74,7 +74,7 @@ const Register = () => {
             Register
           </button>
           <div className="flex justify-center gap-x-3 items-center mt-6">
-            <p>Already have an account?</p> <Link to="/login">Login</Link>
+            <p className="text-[#232323]">Already have an account?</p> <Link className="text-blue-500" to="/login">Login</Link>
           </div>
         </form>
       </div>
