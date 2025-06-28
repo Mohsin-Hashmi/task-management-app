@@ -2,7 +2,7 @@ import React from "react";
 
 const TaskControls = () => {
   return (
-    <div className="pt-16 pb-4 flex justify-center gap-x-4">
+    <div className="pt-16 pb-4 flex justify-center items-center gap-x-4">
       <div className="relative w-[400px]">
         <select
           className="w-[400px] p-3 pr-10 rounded-lg  text-[#232323] bg-[#fff] outline-none font-medium text-[16px] appearance-none"
