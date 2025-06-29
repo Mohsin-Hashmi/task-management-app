@@ -2,13 +2,14 @@ const User = require("../models/users");
 const Task = require("../models/tasks");
 const getAllUsers = async (req, res) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await User.find({isAdmin : false});
     if (!allUsers) {
       return res.status(404).json({
         success: false,
         message: "No users found",
       });
     }
+   
     return res.status(200).json({
       success: true,
       message: "Users fetched successfully",
