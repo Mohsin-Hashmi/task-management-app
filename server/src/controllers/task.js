@@ -103,6 +103,12 @@ const deleteTask = async (req, res) => {
       });
     }
     const deletedTask = await Task.findByIdAndDelete(_id);
+     if (!deletedTask) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found or already deleted",
+      });
+    }
     return res.status(200).json({
       success: true,
       message: "Task deleted successfully",
