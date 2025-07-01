@@ -1,59 +1,127 @@
-import React from "react";
-
+import { useState } from "react";
+import addTask from "../services/addTask";
+import { addSingleTask } from "../utils/taskSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+  import {  toast } from 'react-toastify';
 const Modal = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const navigate= useNavigate();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
+  const [dueDate, setDueDate] = useState("");
+
+  /**
+   * Handle Add Task Function
+   */
+  const handleAddTask = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await addTask({ title, description, priority });
+      toast.success("Task Added Successfully")
+      dispatch(addSingleTask(response))
+      onClose();
+      console.log("added task is", response);
+    } catch (err) {
+      console.log("Error in adding the task", err);
+    }
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white text-black w-[90vw] max-w-[800px] rounded-xl shadow-2xl p-8 relative">
+      <div className="bg-white text-black w-[90vw] max-w-[800px] rounded-2xl shadow-2xl p-10 relative transition-all duration-300">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-700"
+          className="absolute top-4 right-4 text-3xl text-gray-400 hover:text-gray-700 transition duration-200"
         >
           &times;
         </button>
-        <h2 className="text-2xl font-bold mb-10 text-center">Add New Task</h2>
-        <div className="flex flex-wrap items-center">
-          <label className="mb-2" htmlFor="">
-            Task Title
-          </label>
-          <input
-            className=" w-full border border-black  p-2 outline-none rounded-lg"
-            type="text"
-            placeholder="Enter Task Title"
-          />
-        </div>
-        <div className="flex flex-wrap">
-          <label className="mb-2 mt-2" htmlFor="">
-            Description
-          </label>
-          <textarea
-            className="w-full min-h-[100px] p-2 border border-black outline-none rounded-lg"
-            name=""
-            id=""
-            placeholder="Enter Description about task"
-          ></textarea>
-        </div>
-        <div className="my-6">
-          <div className="flex items-center gap-x-5">
-            <label htmlFor="">Priority: </label>
-            <div className="relative w-[400px]">
-              <select
-                className="w-[200px] p-3 pr-10 rounded-lg  text-[#232323]  border border-black bg-[#fff] outline-none font-medium text-[16px] appearance-none"
-                defaultValue=""
-              >
-                <option value="" disabled hidden>
-                  High
-                </option>
-                <option value="">High</option>
-                <option value="">Low</option>
-                <option value="">Medium</option>
-                
-              </select>
-              <div className="absolute top-1/2 right-25 -translate-y-1/2 pointer-events-none  text-[#011F5B] text-sm">
-                ▼
+        <h2 className="text-3xl font-extrabold mb-10 text-center text-[#232323] tracking-wide">
+          Add New Task
+        </h2>
+
+        <form action="" onSubmit={handleAddTask}>
+          <div className="flex flex-wrap mb-6">
+            <label
+              className="mb-2 text-[#232323] font-semibold w-full"
+              htmlFor=""
+            >
+              Task Title
+            </label>
+            <input
+              className="w-full border border-[#232323] p-3 outline-none rounded-lg focus:ring-2 focus:ring-green-500 transition duration-150"
+              type="text"
+              placeholder="Enter Task Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-wrap mb-6">
+            <label
+              className="mb-2 text-[#232323] font-semibold w-full"
+              htmlFor=""
+            >
+              Description
+            </label>
+            <textarea
+              className="w-full min-h-[120px] p-3 border border-[#232323] outline-none rounded-lg resize-none focus:ring-2 focus:ring-green-500 transition duration-150"
+              placeholder="Enter Description about task"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
+
+          <div className="my-6 flex flex-col md:flex-row justify-between gap-6">
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <label className="text-[#232323] font-semibold whitespace-nowrap">
+                Priority:
+              </label>
+              <div className="relative w-full md:w-[200px]">
+                <select
+                  className="w-full p-3 pr-10 rounded-lg text-[#232323] border border-[#232323] bg-white outline-none font-medium text-[16px] appearance-none"
+                  defaultValue=""
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                >
+                  <option value="" disabled hidden>
+                    Medium
+                  </option>
+                  <option value="high">High</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                </select>
+                <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none text-[#232323] text-sm">
+                  ▼
+                </div>
               </div>
             </div>
+
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <label className="text-[#232323] font-semibold whitespace-nowrap">
+                Due Date:
+              </label>
+              <input
+                type="date"
+                className="border border-[#232323] w-full md:w-[160px] p-3 rounded-lg outline-none"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
+
+          <div className="flex items-center justify-around mt-10 gap-4">
+            <button
+              onClick={onClose}
+              className="bg-red-600 px-6 py-3 rounded-lg text-white font-semibold hover:bg-red-700 transition duration-200"
+            >
+              Cancel
+            </button>
+            <button type="submit"  className="bg-green-600 px-6 py-3 rounded-lg text-white font-semibold hover:bg-green-700 transition duration-200">
+              Create Task
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

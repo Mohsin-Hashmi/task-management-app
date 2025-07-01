@@ -4,10 +4,10 @@ import { useState } from "react";
 const TaskControls = () => {
   const [showModal, setShowModal]= useState(false);
   return (
-    <div className="pt-16 pb-4 flex justify-center items-center gap-x-4">
+    <div className="pt-16 pb-4 flex justify-between items-center gap-x-4">
       <div className="relative w-[400px]">
         <select
-          className="w-[400px] p-3 pr-10 rounded-lg  text-[#232323] bg-[#fff] outline-none font-medium text-[16px] appearance-none"
+          className="w-[450px] p-4  rounded-lg  text-[#232323] bg-[#fff] outline-none font-medium text-[16px] appearance-none"
           defaultValue=""
         >
           <option value="" disabled hidden>
@@ -20,13 +20,13 @@ const TaskControls = () => {
           <option value="">Medium Priority</option>
           <option value="">Low Priority</option>
         </select>
-        <div className="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none  text-[#232323]  text-sm">
+        <div className="absolute top-1/2 -right-8 -translate-y-1/2 pointer-events-none  text-[#232323]  text-sm">
           ▼
         </div>
       </div>
       <div className="relative w-[400px]">
         <select
-          className="w-[400px] p-3 pr-10 rounded-lg  text-[#232323]  bg-[#fff] outline-none font-medium text-[16px] appearance-none"
+          className="w-[450px] p-4  rounded-lg  text-[#232323]  bg-[#fff] outline-none font-medium text-[16px] appearance-none"
           defaultValue=""
         >
           <option value="" disabled hidden>
@@ -39,7 +39,7 @@ const TaskControls = () => {
           <option value="">Completed First</option>
           <option value="">Pending First</option>
         </select>
-        <div className="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none  text-[#011F5B] text-sm">
+        <div className="absolute top-1/2 -right-8 -translate-y-1/2 pointer-events-none  text-[#011F5B] text-sm">
           ▼
         </div>
       </div>

@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { ToastContainer } from 'react-toastify';
 function App() {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
@@ -21,7 +22,9 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <Routes>
+       
         {/* Public Routes */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
