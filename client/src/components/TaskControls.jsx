@@ -1,8 +1,8 @@
 import React from "react";
 import Modal from "./Modal";
 import { useState } from "react";
-const TaskControls = () => {
-  const [showModal, setShowModal]= useState(false);
+const TaskControls = ({showModal}) => {
+
   return (
     <div className="pt-16 pb-4 flex justify-between items-center gap-x-4">
       <div className="relative w-[400px]">
@@ -44,14 +44,11 @@ const TaskControls = () => {
         </div>
       </div>
       <button
-        onClick={() => setShowModal(true)}
+        onClick={() => showModal(true)}
         className="bg-[#BDE037] p-3 rounded-lg font-normal text-xl text-[#232323]"
       >
         Add New Task
       </button>
-      {
-        showModal && <Modal onClose={()=> setShowModal(false)} />
-      }
     </div>
   );
 };

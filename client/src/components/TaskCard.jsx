@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-const TaskCard = ({ task, onDelete }) => {
+
+const TaskCard = ({ task, onDelete, showModal }) => {
   return (
     <div className="bg-white rounded-xl border-l-[5px] border-yellow-500 shadow-lg p-5 m-2 w-[370px] transition-transform hover:scale-105 hover:shadow-2xl min-h-52">
       <h2 className="text-xl font-bold mb-2 text-gray-800">{task.title}</h2>
@@ -32,6 +33,7 @@ const TaskCard = ({ task, onDelete }) => {
       <div className="flex gap-x-[10px] mt-4">
         <Link
           to=""
+          onClick={()=> showModal(task)}
           className="text-white font-semibold bg-blue-600 p-2 w-20 text-center rounded-lg"
         >
           Edit

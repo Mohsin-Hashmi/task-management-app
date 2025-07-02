@@ -3,14 +3,16 @@ import addTask from "../services/addTask";
 import { addSingleTask } from "../utils/taskSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-  import {  toast } from 'react-toastify';
-const Modal = ({ onClose }) => {
+import { toast } from "react-toastify";
+import { updateTask } from "../utils/taskSlice";
+const Modal = ({ onClose, editTask, mode = "create", task = null }) => {
   const dispatch = useDispatch();
-  const navigate= useNavigate();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [title, setTitle] = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const [priority, setPriority] = useState(task?.priority || "");
+  const [dueDate, setDueDate] = useState(task?.dueDate || "");
+
+  const payload = { title, description, priority };
 
   /**
    * Handle Add Task Function
@@ -18,11 +20,19 @@ const Modal = ({ onClose }) => {
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await addTask({ title, description, priority });
-      toast.success("Task Added Successfully")
-      dispatch(addSingleTask(response))
+      if (mode === "create") {
+        const response = await addTask(payload);
+        toast.success("Task Added Successfully");
+        dispatch(addSingleTask(response));
+        console.log("added task is", response);
+      } else if (mode === "edit") {
+        const response = await editTask(task._id, payload);
+        console.log("update task is", response);
+        dispatch(updateTask(response)); // You'll need this reducer
+        toast.success("Task updated successfully!");
+      }
+
       onClose();
-      console.log("added task is", response);
     } catch (err) {
       console.log("Error in adding the task", err);
     }
@@ -37,7 +47,7 @@ const Modal = ({ onClose }) => {
           &times;
         </button>
         <h2 className="text-3xl font-extrabold mb-10 text-center text-[#232323] tracking-wide">
-          Add New Task
+          {mode === "create" ? "Add New Task" : "Edit Task"}
         </h2>
 
         <form action="" onSubmit={handleAddTask}>
@@ -117,8 +127,11 @@ const Modal = ({ onClose }) => {
             >
               Cancel
             </button>
-            <button type="submit"  className="bg-green-600 px-6 py-3 rounded-lg text-white font-semibold hover:bg-green-700 transition duration-200">
-              Create Task
+            <button
+              type="submit"
+              className="bg-green-600 px-6 py-3 rounded-lg text-white font-semibold hover:bg-green-700 transition duration-200"
+            >
+              {mode === "create" ? "Create Task" : "Edit Task"}
             </button>
           </div>
         </form>
