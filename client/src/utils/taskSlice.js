@@ -13,10 +13,10 @@ const taskSlice = createSlice({
     removeTask: (state, action) => {
       return state.filter((task) => task._id !== action.payload);
     },
-     updateTask: (state, action) => {
-      const index = state.findIndex((t) => t._id === action.payload._id);
+    updateTask: (state, action) => {
+      const index = state.findIndex((task) => task._id === action.payload._id);
       if (index !== -1) {
-        state[index] = action.payload;
+        state[index] = action.payload; // Overwrite the updated task
       }
     },
   },

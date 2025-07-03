@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const TaskCard = ({ task, onDelete, showModal }) => {
+const TaskCard = ({ task, onDelete, showModal, closeModal, showPopUp }) => {
   return (
     <div className="bg-white rounded-xl border-l-[5px] border-yellow-500 shadow-lg p-5 m-2 w-[370px] transition-transform hover:scale-105 hover:shadow-2xl min-h-52">
       <h2 className="text-xl font-bold mb-2 text-gray-800">{task.title}</h2>
@@ -24,16 +24,16 @@ const TaskCard = ({ task, onDelete, showModal }) => {
       <p className="mb-1">
         <span className="font-semibold text-gray-700">Completed:</span>{" "}
         <span className={task.completed ? "text-green-600" : "text-red-600"}>
-          {task.completed ? "Yes" : "No"}
+          {task.completed ? "Completed" : "Pending"}
         </span>
       </p>
       <p className="text-sm text-gray-400">
         Created: {new Date(task.createdAt).toLocaleString()}
       </p>
-      <div className="flex gap-x-[10px] mt-4">
+      <div className="flex gap-x-[10px] mt-4 items-center">
         <Link
           to=""
-          onClick={()=> showModal(task)}
+          onClick={() => showModal(task)}
           className="text-white font-semibold bg-blue-600 p-2 w-20 text-center rounded-lg"
         >
           Edit
@@ -47,6 +47,12 @@ const TaskCard = ({ task, onDelete, showModal }) => {
         >
           Delete
         </button>
+        <Link
+          onClick={() => showPopUp(task)}
+          className=" text-white  bg-green-600 px-1 py-2  text-[16px] text-sm text-center rounded-lg"
+        >
+          {task.completed ? "Mark Uncompleted" : "Mark Completed"}
+        </Link>
       </div>
     </div>
   );

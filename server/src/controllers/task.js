@@ -16,7 +16,6 @@ const getAllTasks = async (req, res) => {
       tasks: tasks,
     });
   } catch (err) {
-    
     return res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -50,7 +49,7 @@ const createTask = async (req, res) => {
       newTask: newTask,
     });
   } catch (err) {
-  console.log(err);
+    console.log(err);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -103,7 +102,7 @@ const deleteTask = async (req, res) => {
       });
     }
     const deletedTask = await Task.findByIdAndDelete(_id);
-     if (!deletedTask) {
+    if (!deletedTask) {
       return res.status(404).json({
         success: false,
         message: "Task not found or already deleted",
@@ -123,40 +122,47 @@ const deleteTask = async (req, res) => {
 };
 
 const toggleCompletion = async (req, res) => {
+  console.log("Toggle completion API hit"); 
   try {
 
     const { _id } = req.params;
-    if(!_id){
+
+    if (!_id) {
       return res.status(400).json({
         success: false,
-        message: "Task ID is required"
-      })
+        message: "Task ID is required",
+      });
     }
-    const isTaskExist= await Task.findById(_id)
-    if(!isTaskExist){
+
+    const task = await Task.findById(_id);
+    if (!task) {
       return res.status(404).json({
         success: false,
-        message: "Task not found"
-      })
+        message: "Task not found",
+      });
     }
-    const updatedTask = await Task.findByIdAndUpdate(
-      _id,
-      { completed: !isTaskExist.completed },
-      { new: true }
-    );
+
+    // 🔁 Toggle the 'completed' status
+    task.completed = !task.completed;
+ 
+    await task.save();
+
+    
+
     return res.status(200).json({
       success: true,
-      message: "Task completion status toggled successfully",
-      updatedTask: updatedTask,
+      message: "Task status toggled",
+      updatedTask: task,
     });
-
   } catch (err) {
+    console.error("Error in toggleCompletion:", err);
     return res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: "Internal Server Error",
     });
   }
 };
+
 
 module.exports = {
   getAllTasks,
