@@ -18,8 +18,7 @@ const AdminPanel = () => {
   const completedTasks = tasksStore.filter((task) => task.completed).length;
   const pendingTasks = tasksStore.filter((task) => !task.completed).length;
 
-  console.log("taskStore :", tasksStore);
-
+  /**API to get All the Tasks */
   const handleGetTasks = async () => {
     try {
       const response = await getAllTasks();
@@ -33,6 +32,7 @@ const AdminPanel = () => {
     handleGetTasks();
   }, []);
 
+    /**API to get All the Users */
   const handleGetAllUsers = async () => {
     try {
       const response = await getAllUsers();
@@ -42,7 +42,6 @@ const AdminPanel = () => {
       console.log("Error to fetch Users: ", err);
     }
   };
-
   useEffect(() => {
     handleGetAllUsers();
   }, []);
